@@ -1,69 +1,437 @@
-# Prerequisites
-*.d
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>root@sangamghimire:~$ /portfolio-hub</title>
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+  <!-- PWA Settings (Installs as App) -->
+  <meta name="theme-color" content="#080a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-# Precompiled Headers
-*.gch
-*.pch
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-# Linker files
-*.ilk
+  <style>
+    :root {
+      --bg-color: #080a0f;
+      --card-bg: #0f141c;
+      --card-border: rgba(0, 255, 136, 0.2);
+      --accent-green: #00ff88;
+      --accent-glow: rgba(0, 255, 136, 0.35);
+      --text-main: #e2e8f0;
+      --text-muted: #7e8b9b;
+      --danger-red: #ff4757;
+      --warning-gold: #ffa502;
+    }
 
-# Debugger Files
-*.pdb
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Fira Code', monospace;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
 
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.3;
+    }
 
-# Fortran module files
-*.mod
-*.smod
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+    .terminal-bar {
+      margin-top: 20px;
+      background: #05070a;
+      border: 1px solid var(--card-border);
+      border-radius: 8px 8px 0 0;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-# Executables
-*.exe
-*.out
-*.app
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+    .terminal-title { color: var(--text-muted); font-size: 0.85rem; margin-left: 10px; }
 
-# Build directories
-build/
-Build/
-build-*/
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 0 0 35px rgba(0, 255, 136, 0.08);
+      margin-bottom: 40px;
+    }
 
-# CMake generated files
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
-install_manifest.txt
-compile_commands.json
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-green);
+      padding: 4px;
+      object-fit: cover;
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
 
-# Temporary files
-*.tmp
-*.log
-*.bak
-*.swp
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-top: 15px;
+      color: #fff;
+    }
 
-# vcpkg
-vcpkg_installed/
+    .prompt-text { color: var(--accent-green); font-size: 1rem; margin: 8px 0; }
+    .bio-text { color: var(--text-muted); max-width: 680px; margin: 0 auto 25px; font-size: 0.95rem; }
 
-# debug information files
-*.dwo
+    .social-links { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--card-border);
+      background: rgba(0, 255, 136, 0.05);
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
 
-# test output & cache
-Testing/
-.cache/
+    .social-btn:hover {
+      background: var(--accent-green);
+      color: #000;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin: 40px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-green);
+      border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+      padding-bottom: 10px;
+    }
+
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%; border: 0;
+    }
+
+    .card-meta {
+      padding: 10px 15px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    /* Medical Need & Hearing Aid Target Box */
+    .medical-card {
+      background: #111722;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    .report-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: rgba(255, 71, 87, 0.2);
+      color: var(--danger-red);
+      border: 1px solid var(--danger-red);
+    }
+
+    .price-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 0.88rem;
+    }
+
+    .price-list-table th, .price-list-table td {
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .price-list-table th {
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--accent-green);
+    }
+
+    /* Donation Cards */
+    .donation-panel {
+      background: #0f1620;
+      border: 1px solid var(--accent-green);
+      border-radius: 12px;
+      padding: 28px;
+      margin-top: 35px;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.12);
+    }
+
+    .donation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .bank-card {
+      background: #080a0f;
+      border: 1px solid var(--card-border);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .acc-number {
+      color: var(--accent-green);
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .map-wrapper {
+      position: relative;
+      padding-bottom: 40%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 768px) { .map-wrapper { padding-bottom: 70%; } }
+
+    .map-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%; border: 0;
+      filter: invert(90%) hue-rotate(180deg) contrast(110%);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 50px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="terminal-bar">
+      <span class="terminal-dot dot-red"></span>
+      <span class="terminal-dot dot-yellow"></span>
+      <span class="terminal-dot dot-green"></span>
+      <span class="terminal-title">bash — sangam@darknet:~# ./init_showcase.sh</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400" alt="Sangam Ghimire" class="profile-img" />
+      <h1>Sangam Ghimire</h1>
+      <p class="prompt-text">user@cyber:~$ whoami --status</p>
+      <p class="bio-text">
+        Photography Student @ <strong>Kantipur Film Academy</strong> | White Hat & Ethical Hacking Explorer | Creative Visual Storyteller & Filmmaker.
+      </p>
+
+      <div class="social-links">
+        <a href="https://www.youtube.com/@Shree_Sangam.Ghimire" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
+        <a href="https://www.instagram.com/Shree_Sangam.Ghimire" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="https://vm.tiktok.com/ZSd6Bj7N8" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+        <a href="https://www.facebook.com/Shree_Sangam.Ghimire" target="_blank" class="social-btn"><i class="fa-brands fa-facebook"></i> Facebook</a>
+      </div>
+    </header>
+
+    <!-- Medical Need & Hearing Aid Target -->
+    <h2 class="section-title"><i class="fa-solid fa-ear-listen"></i> [01] Audiological Report & Device Goal</h2>
+    <div class="medical-card">
+      <span class="report-badge"><i class="fa-solid fa-file-medical"></i> CLINICAL EVALUATION CERTIFIED</span>
+      <p style="color: var(--text-main); font-size: 0.95rem;">
+        <strong>Madhyapur Hearing & Speech Solution Diagnosis:</strong><br>
+        • Right Ear: <strong>Severe Mixed Hearing Loss (80 dB PTA)</strong><br>
+        • Left Ear: <strong>Profound Hearing Loss (96.25 dB PTA)</strong>
+      </p>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px;">
+        High-gain UltraPower (UP/SP) hearing instruments are clinically recommended for speech clarity and rehabilitation. Reference pricing based on Phonak Hearing Systems (June 2024 Reference Guide):
+      </p>
+
+      <div style="overflow-x:auto;">
+        <table class="price-list-table">
+          <thead>
+            <tr>
+              <th>Series / Model</th>
+              <th>Supported Category</th>
+              <th>Channels</th>
+              <th>Official Reference Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Phonak Naída™ L30-UP</strong></td>
+              <td>Severe to Profound Hearing Loss</td>
+              <td>12 Channels</td>
+              <td>₹54,500 (per unit)</td>
+            </tr>
+            <tr>
+              <td><strong>Phonak Naída™ L50-UP</strong></td>
+              <td>Severe to Profound Hearing Loss</td>
+              <td>16 Channels</td>
+              <td>₹1,00,000 (per unit)</td>
+            </tr>
+            <tr>
+              <td><strong>Phonak Terra™ BTE-UP</strong></td>
+              <td>UltraPower Standard Solution</td>
+              <td>8 Channels</td>
+              <td>₹26,500 (per unit)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Donation Support Section -->
+    <div class="donation-panel">
+      <h2 style="color: var(--accent-green); font-size: 1.3rem; margin-bottom: 8px;">
+        <i class="fa-solid fa-hand-holding-heart"></i> Hearing Aid Device Fund & Contributions
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.92rem;">
+        Support Sangam's hearing rehabilitation and creative filmmaking journey directly:
+      </p>
+
+      <div class="donation-grid">
+        <div class="bank-card">
+          <div style="color:#fff; font-weight:700;"><i class="fa-solid fa-building-columns"></i> Nepal Investment Mega Bank (NIMB)</div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Account Holder: Sangam Ghimire</p>
+          <div class="acc-number">9810582069</div>
+        </div>
+
+        <div class="bank-card">
+          <div style="color:#fff; font-weight:700;"><i class="fa-solid fa-building-columns"></i> Prabhu Bank</div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Account Holder: Sangam Ghimire</p>
+          <div class="acc-number">9810582069</div>
+        </div>
+
+        <div class="bank-card">
+          <div style="color:#fff; font-weight:700;"><i class="fa-solid fa-wallet"></i> eSewa / Khalti / Namaste Pay</div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">ID / Registered Mobile:</p>
+          <div class="acc-number">9810582069</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Video -->
+    <h2 class="section-title"><i class="fa-solid fa-terminal"></i> [02] Featured Visual Reel</h2>
+    <div class="video-card" style="margin-bottom: 35px;">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/ee75qsdrZKg" allowfullscreen></iframe>
+      </div>
+      <div class="card-meta"><span>Main Feature Showcase</span><span>ID: ee75qsdrZKg</span></div>
+    </div>
+
+    <!-- Recent Uploads -->
+    <h2 class="section-title"><i class="fa-solid fa-folder-open"></i> [03] Recent Projects</h2>
+    <div class="video-grid">
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/IUpsGy0TVsY" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/NY2c7saul0c" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/Rt7nbqiSk3g" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/jubS3ALnNOM" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/Q-TwahX4D9E" allowfullscreen></iframe></div></div>
+    </div>
+
+    <!-- Popular Hits -->
+    <h2 class="section-title"><i class="fa-solid fa-fire"></i> [04] Popular Highlights</h2>
+    <div class="video-grid">
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/YmbnE3nNYvE" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/QtpPRRnD-88" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/b-psY5my7Mk" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/hsyb3rVsRdw" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/j01XXGX4yYk" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/uQyh9mdJEm4" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/MtrqQGn-gyE" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/Bo0JUTlpNm0" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/ZHB_939o9n0" allowfullscreen></iframe></div></div>
+      <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/fcXDSHntq20" allowfullscreen></iframe></div></div>
+    </div>
+
+    <!-- Map Location -->
+    <h2 class="section-title"><i class="fa-solid fa-location-dot"></i> [05] Location Coordinates</h2>
+    <div class="map-wrapper">
+      <iframe src="https://maps.google.com/maps?q=Shree%20Sangam%20Ghimire,%20Nepal&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
+    </div>
+
+    <!-- Live QR -->
+    <div style="text-align: center; margin-top: 40px; background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--card-border);">
+      <h3 style="color: var(--accent-green);"><i class="fa-solid fa-qrcode"></i> Scan to Share Hub</h3>
+      <img id="dynamic-qr" style="border: 4px solid #fff; border-radius: 6px; margin: 15px auto; display: block;" alt="QR Code" />
+    </div>
+
+    <footer>
+      <p>© 2026 Sangam Ghimire | Kantipur Film Academy & Ethical Security Researcher.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById('dynamic-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(window.location.href)}`;
+  </script>
+</body>
+</html>
